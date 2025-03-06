@@ -13,7 +13,8 @@ Docker迅雷的下载助手，解决批量磁力链接下载与批量电视剧�
   - 使用正则表达式，一键修改文件名称，例如：`行s走rS02E03 ,..., 行s走rS05E04` → `行尸走肉 - S02E03 ,..., 行尸走肉 - S05E04`。
 
 ## 使用方法
-### For Windows
+<details>
+<summary><strong>For Windows</strong></summary>
 
 ### 环境准备
 
@@ -109,7 +110,7 @@ python app.py
 ### 第三步-删除空文件夹
 
 最后，删除迅雷下载目录的空文件夹（自动匹配之前的关键词），同样需要关闭预览模式进行实际删除。
-
+<details>
 ### For Docker
 
 ## 批量下载磁力界面以及Docker版本界面
