@@ -24,7 +24,7 @@ pip install -r requirements.txt
 ```
 或
 ```bash
-pip install -r gradio selenium
+pip install -r gradio selenium paramiko chromedriver-autoinstaller
 ```
 
 #### 2. 运行
