@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  move_rename_service:
+    container_name: move_rename_container
+
+    build:
+
+      # 指定构建上下文（文件位置）
+      context: 
+
+      # 指定 Dockerfile 文件名及其位置
+      dockerfile: ./Dockerfile
+
+      args:
+        HTTP_PROXY: "http://IP地址:10809"
+        HTTPS_PROXY: "http://IP地址:10809"
+    environment:
+     - no_proxy=127.0.0.1,localhost
+    ports:
+      - "7861:7861"
+
+    # 指定容器操作范围（文件位置）
+    volumes:
+      - /srv/硬盘位置/DataBase:/DataBase
+      - /srv/硬盘位置/DataBase2:/DataBase2
+      - /srv/硬盘位置/DataBase/docker_staff/move_rename:/app
+
+    restart: unless-stopped
