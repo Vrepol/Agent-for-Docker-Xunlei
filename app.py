@@ -324,6 +324,7 @@ def delete_empty_folders_with_keyword(
 #  并通过 build_interface(...) 接收 main() 传进来的配置
 # =============================================================================
 def build_interface(
+    server_ip:str,
     download_page_url: str,
     remote_path_choices: list,
     local_folder_choices: list
@@ -412,7 +413,7 @@ def build_interface(
                     with gr.Row():
                         host_input = gr.Textbox(
                             label="树莓派 / 服务器 IP", 
-                            value="100.97.92.19", 
+                            value=server_ip, 
                             interactive=True
                         )
                         port_input = gr.Number(
@@ -498,7 +499,7 @@ def build_interface(
                         )
                         target_folder = gr.Textbox(
                             label="目标文件夹(后续也会用于重命名)",
-                            value=r"\\100.97.92.19\DataBase\电视剧",
+                            value=r"\\"+server_ip+r"\DataBase\电视剧",
                             interactive=True
                         )
                         create_if_not_exists = gr.Checkbox(
@@ -612,23 +613,26 @@ def build_interface(
 # main(): 在这里统一定义“易变的 URL / 路径”，然后传给 build_interface
 # =============================================================================
 def main():
-    # 1) 下载页面的 URL（Selenium 会用到）
-    DOWNLOAD_PAGE_URL = "http://IP:2345"
+    # 1) 访问服务器的地址和下载页面的 URL（Selenium 会用到）
+    SERVER_IP="100.97.*.*" #"192.168.*.*"
+    
+    DOWNLOAD_PAGE_URL = "http://100.97.*.*:2345" #"http://192.168.*.*:2345"
 
-    # 2) 可选的远程路径（chmod 目标），就是服务器的硬盘地址，可以修改地更细一点（比如/srv/Device/DataBase/Xunlei_download)，
+    # 2) 服务器的本地路径（chmod 目标）,主要用于放开权限,如果你的docker_xunlei PID设置正确则无需这一步
     REMOTE_PATH_CHOICES = [
-        "/srv/Device/DataBase",
-        "/srv/Device/DataBase2"
+        "/srv/Device/DataBase/Xunlei_download",
+        "/srv/Device/DataBase2/Xunlei_download"
     ]
 
-    # 3) 本地或网络共享目录，通过什么地址可以访问到服务器迅雷下载地址
+    # 3) 本地或网络共享目录
     LOCAL_FOLDER_CHOICES = [
-        r"\\IP\DataBase\downloads",
-        r"\\IP\DataBase2\downloads"
+        r"\\100.97.*.*\DataBase\Xunlei_download",
+        r"\\100.97.*.*\DataBase2\Xunlei_download"
     ]
 
     # 构建 Gradio 界面，传入这些配置
     demo = build_interface(
+        server_ip=SERVER_IP,
         download_page_url=DOWNLOAD_PAGE_URL,
         remote_path_choices=REMOTE_PATH_CHOICES,
         local_folder_choices=LOCAL_FOLDER_CHOICES
