@@ -121,7 +121,23 @@ python app.py
 最后，删除迅雷下载目录的空文件夹（自动匹配之前的关键词），同样需要关闭预览模式进行实际删除。
 
 </details> <details> <summary><strong>For Docker（在服务器上运行，all in one）</strong></summary>
-  
+
+### 测试环境
+
+- 已在树莓派4B-4GB OMV系统上进行测试
+- ```bash
+  ~# cat /etc/os-release
+  >>>
+  PRETTY_NAME="Debian GNU/Linux 12 (bookworm)"
+  NAME="Debian GNU/Linux"
+  VERSION_ID="12"
+  VERSION="12 (bookworm)"
+  VERSION_CODENAME=bookworm
+  ID=debian
+  HOME_URL="https://www.debian.org/"
+  SUPPORT_URL="https://www.debian.org/support"
+  BUG_REPORT_URL="https://bugs.debian.org/"
+  ```
 
 ### 前置条件
 - 确保已安装 Docker 和 Docker Compose。
