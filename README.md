@@ -1,6 +1,6 @@
 # Agent-for-Docker-Xunlei
 
-Docker迅雷的下载助手，解决批量磁力链接下载与批量电视剧重命名与移动。由于每个磁力文件名称的不确定性，该项目需要人工介入，保证省去重复人工劳动。
+Docker迅雷的下载助手，解决批量磁力链接下载与批量电视剧重命名与移动。由于每个磁力文件名称的不确定性和服务器地址与文件名的特殊性，该项目需要人工介入，并保证省去重复人工劳动。
 
 ## 功能
 
@@ -12,9 +12,14 @@ Docker迅雷的下载助手，解决批量磁力链接下载与批量电视剧�
 - **批量重命名**：
   - 使用正则表达式，一键修改文件名称，例如：`行s走rS02E03 ,..., 行s走rS05E04` → `行尸走肉 - S02E03 ,..., 行尸走肉 - S05E04`。
 
+## 流程
+1、配置 迅雷下载目录，下载文件的关键词，目标文件夹，完成批量移动
+2、配置 预期文件名称，正则匹配下载文件，完成批量重命名
+3、删除迅雷下载目录的空文件夹（根据第一步的关键词）
+
 ## 使用方法
 <details>
-<summary><strong>For Windows</strong></summary>
+<summary><strong>For Windows（简单，但并非all in one）</strong></summary>
 
 ### 环境准备
 
@@ -111,7 +116,53 @@ python app.py
 
 最后，删除迅雷下载目录的空文件夹（自动匹配之前的关键词），同样需要关闭预览模式进行实际删除。
 
-### For Docker
+</details> <details> <summary><strong>For Docker（在服务器上运行，无需担心权限问题）</strong></summary>
+  
+
+### 前置条件
+- 确保已安装 Docker 和 Docker Compose。
+
+### 1. 代理设置说明
+
+构建时使用了代理，如需调整代理，修改`docker-compose.yml`中的以下部分，这是保证Dockerfile稳定安装而配置的代理：
+
+```yaml
+args:
+  HTTP_PROXY: "http://你的IP地址:10809"
+  HTTPS_PROXY: "http://你的IP地址:10809"
+```
+### 2. 目录映射说明
+
+容器已将主机以下路径映射至容器内对应位置：
+
+| 主机路径                              | 容器路径       |
+|-----------------------------------|---------------|
+| `/srv/硬盘位置/DataBase`            | `/DataBase`   |
+| `/srv/硬盘位置/DataBase2`           | `/DataBase2`  |
+| `/srv/硬盘位置/DataBase/docker_staff/move_rename` | `/app`        |
+
+### 3. 构建镜像并启动容器
+
+在含有 `docker-compose.yml` 文件的目录中，执行以下命令构建镜像并启动容器：
+
+```bash
+docker-compose up -d --build
+```
+
+### 4. 访问服务
+
+启动完成后，通过浏览器访问以下地址进入 Gradio 界面：
+
+- 本地访问：
+```bash
+http://127.0.0.1:7861
+```
+
+- 局域网访问（替换为实际IP）：
+```bash
+http://192.168.*.*:7861
+```
+
 
 ## 批量下载磁力界面以及Docker版本界面
 ![界面截图2](img/屏幕截图2.png)
