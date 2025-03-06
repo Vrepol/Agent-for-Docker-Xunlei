@@ -12,29 +12,36 @@ Docker迅雷的下载助手，解决批量磁力链接下载与批量电视剧�
 ## 使用方法
 
 ### 环境准备
-1. **安装 ffmpeg**  
-   请先下载并安装 [FFmpeg](https://ffmpeg.org/download.html)。
-
-2. **克隆仓库**  
-   使用以下命令将仓库克隆到本地：
-   ```bash
-   https://github.com/Vrepol/Video-image-photo-converter-.git
-   ```
    
-3.**安装依赖**
+1.**安装依赖**
   确保已安装 Python 3.x，然后运行以下命令安装项目依赖：
     ```
     pip install -r requirements.txt
     ```
-   
-4.**运行**
+    或
+    ```
+    pip install -r gradio selenium
+    ```
+2.**运行**
   运行以下命令启动 GUI 界面：
     ```
-    python gui_converter.py
+    python app.py
     ```
+3.**进入Gradio**
+  访问
+  ```
+    127.0.0.1:7861
+  ```
+  或
+  ```
+    192.168.*.*:7861
+  ```
+4.**选择TAB**
+  主要探讨批量处理部分；
+  <img src="img/屏幕截图2.png" alt="界面截图2" width="600">
 
-
+  
 **界面截图**
 以下是工具的界面示例：
 
-<img src="img/屏幕截图1.png" alt="界面截图1" width="600"> <img src="img/屏幕截图2.png" alt="界面截图2" width="600"> <img src="img/屏幕截图3.png" alt="界面截图3" width="600"><img src="img/屏幕截图4.png" alt="界面截图4" width="600">
+<img src="img/屏幕截图1.png" alt="界面截图1" width="600">  <img src="img/屏幕截图3.png" alt="界面截图3" width="600"><img src="img/屏幕截图4.png" alt="界面截图4" width="600">
