@@ -615,7 +615,7 @@ def main():
     # 1) 下载页面的 URL（Selenium 会用到）
     DOWNLOAD_PAGE_URL = "http://IP:2345"
 
-    # 2) 可选的远程路径（chmod 目标）
+    # 2) 可选的远程路径（chmod 目标），就是服务器的硬盘地址，可以修改地更细一点（比如/srv/Device/DataBase/Xunlei_download)，
     REMOTE_PATH_CHOICES = [
         "/srv/Device/DataBase",
         "/srv/Device/DataBase2"
@@ -623,8 +623,8 @@ def main():
 
     # 3) 本地或网络共享目录，通过什么地址可以访问到服务器迅雷下载地址
     LOCAL_FOLDER_CHOICES = [
-        r"\\100.97.92.19\DataBase\downloads",
-        r"\\100.97.92.19\DataBase2\downloads"
+        r"\\IP\DataBase\downloads",
+        r"\\IP\DataBase2\downloads"
     ]
 
     # 构建 Gradio 界面，传入这些配置
