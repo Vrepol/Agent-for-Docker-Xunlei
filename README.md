@@ -12,14 +12,18 @@ Docker迅雷的下载助手，解决批量磁力链接下载与批量电视剧�
 - **批量重命名**：
   - 使用正则表达式，一键修改文件名称，例如：`行s走rS02E03 ,..., 行s走rS05E04` → `行尸走肉 - S02E03 ,..., 行尸走肉 - S05E04`。
 
-## 流程
+## 批量下载流程
+1、将所有的磁力粘贴至输入框
+2、点击下载，不要关闭Gradio页面，等待任务全部添加完成，大约20秒一个任务
+
+## 批量移动流程
 1、配置 迅雷下载目录，下载文件的关键词，目标文件夹，完成批量移动
 2、配置 预期文件名称，正则匹配下载文件，完成批量重命名
 3、删除迅雷下载目录的空文件夹（根据第一步的关键词）
 
 ## 使用方法
 <details>
-<summary><strong>For Windows（简单，但并非all in one）</strong></summary>
+<summary><strong>For Windows（简单，非all in one）</strong></summary>
 
 ### 环境准备
 
@@ -70,7 +74,7 @@ python app.py
 192.168.*.*:7861
 ```
 ---
-### 4. 选择 TAB
+### 4. 选择批量处理TAB
 
 主要探讨批量处理部分：
 ---
@@ -116,7 +120,7 @@ python app.py
 
 最后，删除迅雷下载目录的空文件夹（自动匹配之前的关键词），同样需要关闭预览模式进行实际删除。
 
-</details> <details> <summary><strong>For Docker（在服务器上运行，无需担心权限问题）</strong></summary>
+</details> <details> <summary><strong>For Docker（在服务器上运行，all in one）</strong></summary>
   
 
 ### 前置条件
