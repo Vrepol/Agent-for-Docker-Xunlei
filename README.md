@@ -1,7 +1,7 @@
 # Agent-for-Docker-Xunlei
 
 Docker迅雷的助手，解决批量磁力链接下载与批量电视剧移动与重命名。由于每个磁力文件名称的不确定性和服务器地址与文件名的特殊性，该项目需要人工介入，并保证省去重复人工劳动。
-
+基于https://github.com/cnk3x/xunlei?tab=MIT-1-ov-file
 ## 功能
 
 - **磁力链接批量下载**：
