@@ -1,2 +1,4 @@
 gradio
 selenium
+paramiko
+chromedriver-autoinstaller
