@@ -30,8 +30,24 @@ pip install -r gradio selenium paramiko chromedriver-autoinstaller
 
 #### 2. 修改app.py配置
 ![界面截图00](img/Win3.png)
-
-
+主要修改的有四个配置变量：
+`SERVER_IP`为服务器IP地址
+`DOWNLOAD_PAGE_URL`为迅雷下载界面网址
+`REMOTE_PATH_CHOICES`是服务器本地的下载地址（由于Docker迅雷的需要很高的权限，如果不修改其PID与GID，在后续的移动文件部分会很麻烦，因此需要迅雷文件夹地址进行Chmod -R 777，如果修改过PID/GID无需填写。
+`LOCAL_FOLDER_CHOICES`为SMB协议下，访问迅雷下载文件夹的地址
+示例如下：
+```bash
+SERVER_IP="100.97.*.*"
+DOWNLOAD_PAGE_URL = "http://100.97.*.*:2345"
+REMOTE_PATH_CHOICES = [
+        "/srv/Device/DataBase/Xunlei_download",
+        "/srv/Device/DataBase2/Xunlei_download"
+    ]
+LOCAL_FOLDER_CHOICES = [
+        r"\\100.97.*.*\DataBase\Xunlei_download",
+        r"\\100.97.*.*\DataBase2\Xunlei_download"
+    ]
+```
 #### 3. 运行并进入 Gradio
 
 运行以下命令启动 GUI 界面：
@@ -52,10 +68,11 @@ python app.py
 
 主要探讨批量处理部分：
 ---
+### 第一步-登录服务器并查看迅雷下载文件夹
 
 ![界面截图01](img/Win1.png)
 
-
+1.输入服务器的用户名与密码，如果修改过迅雷的PID、GID则无需此步操作，仅需确认SMB协议下的访问地址点击读取文件夹结构。
 
 ---
 
