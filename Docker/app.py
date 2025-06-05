@@ -17,7 +17,7 @@ from selenium.webdriver.chrome.service import Service
 
 
 # ---------------------- (1) 批量磁力下载逻辑 ----------------------
-def start_download(magnet_input):
+def start_download(magnet_input,server_addr):
     """
     从单个文本框中接收多条磁力链接（每行一条），
     然后逐个在 Selenium 中执行下载。
@@ -35,7 +35,7 @@ def start_download(magnet_input):
         driver = webdriver.Chrome(options=chrome_options,service=service)
 
         # 访问你的下载服务器页面
-        driver.get("http://服务器地址:2345")
+        driver.get(server_addr)
         driver.implicitly_wait(10)
 
         # 点击“新建任务”
@@ -308,12 +308,13 @@ def build_interface():
                 lines=8,
                 placeholder="magnet:?xt=urn:btih:xxxx..."
             )
+            server_addr = gr.Textbox(label="迅雷Docker地址", value="http://100.97.*.*:2345", lines=1)
             output_box = gr.Textbox(label="执行结果", lines=2)
 
             download_button = gr.Button("开始下载")
             download_button.click(
                 fn=start_download,
-                inputs=magnet_input,
+                inputs=[magnet_input,server_addr],
                 outputs=output_box
             )
 
