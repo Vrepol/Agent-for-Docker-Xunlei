@@ -24,26 +24,30 @@ def start_download(magnet_input,server_addr):
     """
     # 按行拆分用户粘贴的磁力链接，并去掉空白行
     magnet_links = [line.strip() for line in magnet_input.split("\n") if line.strip()]
-
+    # 初始化浏览器（若在树莓派Docker环境，可用 Chromium + chromedriver for ARM）
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")  # 无头模式，可根据需要注释
+    chrome_options.add_argument("--no-sandbox")  # 关键
+    chrome_options.add_argument("--disable-dev-shm-usage")  # 关键
+    prefs = {"profile.managed_default_content_settings.images": 2,
+            "profile.managed_default_content_settings.stylesheets": 2,
+            "profile.managed_default_content_settings.fonts": 2}
+    service = Service("/usr/bin/chromedriver")
+    chrome_options.add_experimental_option("prefs", prefs)
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--disable-extensions")
+    driver = webdriver.Chrome(options=chrome_options,service=service)
     for link in magnet_links:
-        # 初始化浏览器（若在树莓派Docker环境，可用 Chromium + chromedriver for ARM）
-        chrome_options = Options()
-        chrome_options.add_argument("--headless")  # 无头模式，可根据需要注释
-        chrome_options.add_argument("--no-sandbox")  # 关键
-        chrome_options.add_argument("--disable-dev-shm-usage")  # 关键
-        service = Service("/usr/bin/chromedriver")
-        driver = webdriver.Chrome(options=chrome_options,service=service)
-
         # 访问你的下载服务器页面
         driver.get(server_addr)
-        driver.implicitly_wait(10)
+        driver.implicitly_wait(2)
 
         # 点击“新建任务”
         new_task_btn = driver.find_element(By.CSS_SELECTOR, ".create__task")
         new_task_btn.click()
 
         # 显式等待弹窗出现
-        wait = WebDriverWait(driver, 10)
+        wait = WebDriverWait(driver, 2)
         wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".nas-task-dialog")))
 
         # 找到输入框，输入磁力链接
@@ -54,16 +58,16 @@ def start_download(magnet_input,server_addr):
         confirm_btn = driver.find_element(By.CSS_SELECTOR, ".el-dialog__footer .el-button.el-button--primary.task-parse-btn")
         confirm_btn.click()
 
-        # 等一下解析完（这里简单等待 2 秒，可根据页面加载情况调整）
-        time.sleep(2)
+        # 等一下解析完（这里简单等待 1 秒，可根据页面加载情况调整）
+        time.sleep(1)
 
         # 点击下载按钮
         download_btn = driver.find_element(By.CSS_SELECTOR, ".result-nas-task-dialog_footer .el-button.el-button--primary.task-parse-btn")
         download_btn.click()
 
         # 等待一些时间，或在此处做更多校验
-        time.sleep(2)
-        driver.quit()
+        time.sleep(1)
+    driver.quit()
 
     return f"已处理 {len(magnet_links)} 条磁力链接！"
 
@@ -308,7 +312,7 @@ def build_interface():
                 lines=8,
                 placeholder="magnet:?xt=urn:btih:xxxx..."
             )
-            server_addr = gr.Textbox(label="迅雷Docker地址", value="http://100.97.*.*:2345", lines=1)
+            server_addr = gr.Textbox(label="迅雷Docker地址", value="http://IP:Port", lines=1)
             output_box = gr.Textbox(label="执行结果", lines=2)
 
             download_button = gr.Button("开始下载")
