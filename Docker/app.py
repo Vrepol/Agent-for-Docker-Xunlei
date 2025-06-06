@@ -433,7 +433,6 @@ def build_interface():
 
 def main():
     demo = build_interface()
-    # 在Docker中可映射端口，server_name=“0.0.0.0”方便外部访问
     demo.launch(server_name="0.0.0.0", server_port=7861, show_error=True)
 
 
